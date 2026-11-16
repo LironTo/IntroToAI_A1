@@ -1,3 +1,4 @@
+
 import time
 
 from search import search, get_gen_exp_count
@@ -7,22 +8,37 @@ from flat_board_state import *
 
 if __name__ == '__main__':
 
-    board = [[3, 3, 0], [2, 2, 1], [0, 1, 1]]
+    board = board = [
+    [3, 0, 1, 3],
+    [0, 1, 1, 1]
+]
 
     start_state = flat_board_state(board)
 
-    # Test base heuristic
-    print("\nTesting base heuristic:")
-    h = base_heuristic(start_state, debug=True)
-    print("Returned heuristic:", h)
+    # Test both heuristics
+    heuristics = [
+        ("Base", base_heuristic),
+        ("Advanced", advanced_heuristic)
+    ]
 
-    # Run A*
-    print("\nStarting A* search:")
+    for name, heuristic in heuristics:
 
-    start_time = time.time()
-    search_result = search(start_state, base_heuristic)
-    end_time = time.time() - start_time
+        print("\n" + "=" * 40)
+        print(f"Testing {name} Heuristic")
+        print("=" * 40)
 
-    print("Runtime:", end_time)
-    print("Solution cost:", search_result[-1].g)
-    print("Generated / Expanded:", get_gen_exp_count())
+        # Print heuristic value for initial state
+        h = heuristic(start_state)
+        print("Initial heuristic value:", h)
+
+        # Run A*
+        start_time = time.perf_counter()
+        search_result = search(start_state, heuristic)
+        runtime = time.perf_counter() - start_time
+
+        generated, expanded = get_gen_exp_count()
+
+        print("Runtime:", runtime)
+        print("Solution cost:", search_result[-1].g)
+        print("Generated:", generated)
+        print("Expanded:", expanded)
