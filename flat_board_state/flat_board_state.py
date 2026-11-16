@@ -14,6 +14,7 @@ RIGHT = (1, 0)
 class flat_board_state:
     def __init__(self, instance_map=None, *args, **kwargs):
         self.instance_map = instance_map
+        self._hash = None
 
     @staticmethod
     def is_goal_state(_flat_board_state):
@@ -34,8 +35,11 @@ class flat_board_state:
 
 
     # you can change the body of the function if you want
-    # def __hash__(self):
-    #     return hash(tuple(tuple(row) for row in self.instance_map))
+    def __hash__(self):
+        # the search hashes the same state many times (OPEN/CLOSED lookups), so compute it only once
+        if self._hash is None:
+            self._hash = hash(tuple(map(tuple, self.instance_map)))
+        return self._hash
 
     # you can change the body of the function if you want
     def __eq__(self, other):
@@ -67,6 +71,8 @@ class flat_board_state:
         col_order = range(cols - 1, -1, -1) if dc == 1 else range(cols)
     
         for r in row_order:
+            if CUBE not in board[r]:  # quick skip of rows without cubes
+                continue
             for c in col_order:
                 if board[r][c] != CUBE:
                     continue
