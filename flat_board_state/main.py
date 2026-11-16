@@ -8,7 +8,7 @@ from flat_board_state import *
 
 if __name__ == '__main__':
 
-    board = board = [
+    board = [
     [3, 0, 1, 3],
     [0, 1, 1, 1]
 ]
