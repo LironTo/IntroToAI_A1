@@ -18,11 +18,8 @@ class flat_board_state:
 
     @staticmethod
     def is_goal_state(_flat_board_state):
-        for i in range(len(_flat_board_state.instance_map)):
-            for j in range(len(_flat_board_state.instance_map[0])):
-                if _flat_board_state.instance_map[i][j] == CUBE or _flat_board_state.instance_map[i][j] == HOLE:
-                    return False
-        return True
+        # goal = no holes left (cubes disappear only into holes, so no cubes are left either)
+        return not any(HOLE in row for row in _flat_board_state.instance_map)
     
 
     def get_neighbors(self):
