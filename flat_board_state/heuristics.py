@@ -115,16 +115,6 @@ def find_min_bottleneck_matching(cubes, holes):
     return distances[left]
 
 
-# Every move pushes all cubes the same way, so the moves toward the two sides of one axis add up:
-# if one cube must go 3 left and another 3 right, at least 6 moves are needed.
-# Matching the sorted lists gives the fewest moves needed toward each side.
-def axis_moves(cube_values, hole_values):
-    pairs = list(zip(sorted(cube_values), sorted(hole_values)))
-    backward = max(cube - hole for cube, hole in pairs)
-    forward = max(hole - cube for cube, hole in pairs)
-    return max(0, backward) + max(0, forward)
-
-
 def advanced_heuristic(_flat_board_state):
     cubes, holes = get_locations(_flat_board_state)
 
