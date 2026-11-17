@@ -121,8 +121,4 @@ def advanced_heuristic(_flat_board_state):
     if not holes:
         return 0
 
-    base = base_heuristic(_flat_board_state)
-
-    bottleneck = find_min_bottleneck_matching(cubes, holes)
-
-    return max(base, bottleneck)
+    return find_min_bottleneck_matching(cubes, holes)

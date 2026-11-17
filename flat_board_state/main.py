@@ -8,9 +8,10 @@ from flat_board_state import *
 
 if __name__ == '__main__':
 
-    board = board = [
-    [3, 0, 1, 3],
-    [0, 1, 1, 1]
+    board = [
+    [3, 0, 0, 1, 1, 1, 1, 1, 1, 1, 3],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 ]
 
     start_state = flat_board_state(board)
